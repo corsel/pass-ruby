@@ -1,0 +1,65 @@
+#!/usr/bin/ruby
+
+require_relative 'class/item'
+require_relative 'class/todo'
+require 'yaml'
+require 'thread'
+#require 'net/http'
+#require 'uri'
+require 'socket'
+
+# puts "#{test.to_yaml}"
+# YAML::load, YAML::load_file
+
+item = Item.new
+db = File.new "db", "w"
+=begin
+socket_thread = Thread.new do
+  server = TCPServer.new 6000
+  server.listen 3
+  client = server.accept
+  message = client.recvfrom 65535
+  puts message[0]
+  puts "deneme called." if message[0].strip! == "deneme"
+#  db << message[0]
+  server.close
+end
+=end
+db << item.to_yaml
+#socket_thread.join
+db.close
+
+yaml_test = YAML.load_file("db")
+puts yaml_test.inspect
+puts "start: #{yaml_test.start}"
+
+=begin
+listener_thread_1 = Thread.new do
+# socket = TCPServer.new "6000"
+  a = 0
+  loop do
+    puts "thread 1: #{a += 1}"
+    break if a > 3
+  end
+end
+
+listener_thread_2 = Thread.new do
+# socket = TCPServer.new "6000"
+  a = 0
+  loop do
+    puts "thread 2: #{a += 1}"
+    break if a > 3
+  end
+end
+
+puts "check 0."
+listener_thread_1.join
+puts "check 1." 
+listener_thread_2.join
+puts "check 2."
+
+response = Net::HTTP.get_response URI.parse "http://www.google.com"
+puts "#{response}"
+Net::HTTP.get_print URI.parse "http://www.google.com" 
+=end
+
