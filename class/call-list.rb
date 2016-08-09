@@ -29,24 +29,42 @@ end
 class Person
   attr_accessor :name
   attr_accessor :date_array
+  attr_accessor :expected_interval
   @interval_array
-  @mean_interval
+  @average_interval
 
   def initialize name
     @date_list = Array.new
     @name = name
+    @set_interval = 0.0
     @interval_array = Array.new
-    @mean_interval = 0.0
+    @average_interval = 0.0
   end
+
+  def recalc_average
+    if @interval_array.size < 1 then return end
+    @average_interval = @interval_array.inject do |tmp, n|
+      tmp += n
+    end
+    @average_interval /= @interval_array.size
+  end
+  
+  def should_call?
+    if Time.now - @date.list.last <= @expected_interval then
+      return false
+    else
+      return true
+    end
+  end
+
   def called
     @date_list.push Time.now
-    puts "debug - Person#called: name: #{@name}, date: #{Time.now}"
     if @date_list.size >= 2 then
       add_list = lambda do 
         @date_list.last(2)[1] - @date_list.last(2)[0]
       end
     @interval_array.push add_list.call
     end
-    puts "\ndebug - Person#called: #{@interval_array.last}"
-  end
+    recalc_average
+  end 
 end 
