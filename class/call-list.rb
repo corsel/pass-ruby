@@ -1,4 +1,4 @@
-require 'yaml' 
+require 'date'
 
 class Database
   attr_accessor :person_array
@@ -6,22 +6,26 @@ class Database
   def initialize
     @person_array = Array.new
   end
-  def add_person name
+
+  def add_person arg_name, arg_interval
     unique_check = @person_array.select do |person|
-      person.name == name
+      person.name == arg_name
     end
     if !unique_check.empty? then
       puts "person exists: #{unique_check.inspect}"
       return
     end
-    @person_array.push Person.new name
+    @person_array.push Person.new arg_name, arg_interval
   end
-  def call_person name
+
+  def call_person arg_name
     person_object = @person_array.select do |person|
-      person.name.eql? name
+      person.name.eql? arg_name
     end
     if !person_object.empty? then
       person_object[0].called
+    else
+      puts "error - person not found: #{arg_name}"
     end
   end
 end
@@ -33,12 +37,13 @@ class Person
   @interval_array
   @average_interval
 
-  def initialize name
+  def initialize arg_name, arg_interval
     @date_list = Array.new
-    @name = name
+    @name = arg_name
     @set_interval = 0.0
     @interval_array = Array.new
     @average_interval = 0.0
+    @expected_interval = arg_interval
   end
 
   def recalc_average
@@ -50,7 +55,7 @@ class Person
   end
   
   def should_call?
-    if Time.now - @date.list.last <= @expected_interval then
+    if Date.today - @date.list.last <= @expected_interval then
       return false
     else
       return true
@@ -58,10 +63,10 @@ class Person
   end
 
   def called
-    @date_list.push Time.now
+    @date_list.push Date.today
     if @date_list.size >= 2 then
       add_list = lambda do 
-        @date_list.last(2)[1] - @date_list.last(2)[0]
+        (@date_list[-1] - @date_list[-2]).to_i
       end
     @interval_array.push add_list.call
     end
