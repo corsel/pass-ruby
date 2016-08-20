@@ -28,6 +28,13 @@ class Database
       puts "error - person not found: #{arg_name}"
     end
   end
+
+  def who_to_call
+    call_array = @person_array.select do |person|
+      person.should_call?
+    end
+    return call_array
+  end
 end
 
 class Person
@@ -72,4 +79,15 @@ class Person
     end
     recalc_average
   end 
+
+  def called_debug arg_days_ago
+    @date_list.push Date.today.prev_day arg_days_ago
+    if @date_list.size >= 2 then
+      add_list = lambda do 
+        (@date_list[-1] - @date_list[-2]).to_i
+      end
+    @interval_array.push add_list.call
+    end
+    recalc_average
+  end
 end 
