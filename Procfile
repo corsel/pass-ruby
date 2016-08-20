@@ -1,1 +1,0 @@
-web: ruby pass.rb
