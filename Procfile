@@ -1,1 +1,1 @@
-web: ruby pass.rb
+web: bundle exec pass.rb
