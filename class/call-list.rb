@@ -62,7 +62,7 @@ class Person
   end
   
   def should_call?
-    if Date.today - @date.list.last <= @expected_interval then
+    if Date.today - @date_list.last <= @expected_interval then
       return false
     else
       return true
