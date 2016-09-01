@@ -1,1 +1,2 @@
-def parse_message arg_message
+class Parser
+end
