@@ -11,9 +11,5 @@ test_db = Database.new
 dummy = Parser.new
 puts "parser test: #{dummy.inspect}"
 
-puts "env test: dir: #{$DIR_NAME}"
-puts "env test: db dir: #{$DB_DIR_NAME}"
-puts "env test: module cfg: #{$MODULE_CFG_NAME}"
-
 db_file.close
 puts "fin."
