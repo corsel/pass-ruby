@@ -1,9 +1,17 @@
 class Parser
-  @@config_file
-
-  def initialize
-    @@config_file = File.new $MODULE_CFG_NAME, 'r'
-    puts "#{@@config_file.readline}"
-    puts "#{@@config_file.readline.split(' ')[0]}"
+  def self.run_cmd arg_alias, arg_arg_string
+    array = Array.new
+    matching_line = File.open($MODULE_CFG_NAME).find do |line|
+      if line[0] == '#' then
+        next
+      end
+      array = line.split(' ')
+      array.shift == arg_alias
+    end
+    #const_get gets class from string
+    #method gets method from string 
+    #shift pops the first element and returns its value
+    Object.const_get(array.shift).method(array.shift).call arg_arg_string.split(' ')
+    puts "debug - Parser#initialize: found match: #{matching_line}"
   end
 end
