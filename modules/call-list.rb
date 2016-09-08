@@ -1,4 +1,7 @@
+#! /usr/bin/ruby
+
 require 'date'
+require_relative '../environment'
 
 class Database
   attr_accessor :person_array

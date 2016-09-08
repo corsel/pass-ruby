@@ -1,6 +1,7 @@
 #! /usr/bin/ruby
 
 require 'socket'
+require_relative '../environment'
 
 def start_server
   server = TCPServer.new 6000

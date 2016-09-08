@@ -1,3 +1,5 @@
+require_relative '../environment'
+
 class Parser
   def self.run_cmd arg_alias, arg_arg_string
     array = Array.new
