@@ -1,4 +1,4 @@
-#! /usr/bin/ruby 
+#! /usr/bin/ruby
 
 require_relative 'environment.rb'
 require_relative 'modules/call-list'
@@ -12,14 +12,16 @@ db_file = File.new "db.d/call-list.db", "a+"
 test_db = Database.new 
 db_file.close
 =end
-
+=begin
+item_db = ItemDB.new
 item_test = Item.new "my_name", "my_price", (1..7).to_a
-puts "debug - item test: #{item_test.inspect}"
+item_db.push item_test
+item_test = Item.new "my_name_2", "my_price_2", (5..8).to_a
+item_db.push item_test
+=end
 
-dbman_test = DBManager.new "foo.db"
-dbman_test.save_db item_test
-dbman_test.finalize
+wallet = Wallet.new "foo.db"
 
-Parser.run_cmd "gubuldak", "4 87"
+NetworkManager.start_server
 
 puts "fin."

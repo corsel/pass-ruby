@@ -1,12 +1,21 @@
 #! /usr/bin/ruby
 
 require 'socket'
+require_relative 'parser' 
 require_relative '../environment'
 
-def start_server
-  server = TCPServer.new 6000
-  conn = server.accept
-  input = conn.readline.split
-  conn.close
-  return input
+class NetworkManager
+  def self.start_server
+    server_alive = true
+    server = TCPServer.new 6000
+    thread = Thread.new do
+      server.listen 1
+      conn = server.accept
+      input = conn.readline.split
+      conn.close
+      #join here, split again in parser. pointless...
+      Parser.run_cmd input[0], input[1..-1].join(' ')
+    end
+    thread.join
+  end
 end
