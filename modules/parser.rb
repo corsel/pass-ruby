@@ -10,10 +10,10 @@ class Parser
       array = line.split(' ')
       array.shift == arg_alias
     end
-    #const_get gets class from string
-    #method gets method from string 
-    #shift pops the first element and returns its value
-    #pass arguments as space delimited string
+    # const_get gets class from string
+    # method gets method from string 
+    # shift pops the first element and returns its value
+    # pass arguments as space delimited string
     Object.const_get(array.shift).method(array.shift).call arg_arg_string.split(' ')
   end
 end

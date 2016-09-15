@@ -28,11 +28,11 @@ class ItemDB
   end 
   def push arg_item
     @item_array.push arg_item
-    puts "debug - ItemDB#push: #{@item_array.inspect}"
   end
 end
 
 class Wallet
+  # too many static vars and methods. reiterate for better oop.
   @daily_amount = 0
   @balance = 0
   @@active_db
@@ -42,19 +42,18 @@ class Wallet
     @@active_db_name = arg_db_name
     @@active_db = DBManager.load @@active_db_name
     @@active_db = ItemDB.new if !@@active_db 
-    puts "debug - Wallet#initialize called: #{@@active_db.inspect}"
   end 
   def set_daily arg_amount
     @daily_amount = arg_amount
   end
   def self.spend *arg_item
-    puts "debug - Wallet::spend called: #{arg_item.inspect}"
-    @@active_db.push Item.new arg_item[0], arg_item[1], arg_item[2..-1]
+    # TODO: double dereference problem unsolved! also, make tags into array ([0][2])
+    @@active_db.push Item.new arg_item[0][0], arg_item[0][1], arg_item[0][2]
     save_db
   end
   def self.save_db
     puts "debug - Wallet::save_db called: #{@@active_db_name}"
-    DBManager.save_bkp @@active_db_name, @@active_db
+    DBManager.save @@active_db_name, @@active_db
   end
   def self.new_day
     puts "debug - Wallet::new_day called."

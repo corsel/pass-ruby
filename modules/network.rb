@@ -13,7 +13,7 @@ class NetworkManager
       conn = server.accept
       input = conn.readline.split
       conn.close
-      #join here, split again in parser. pointless...
+      # TODO: join here, split again in parser. pointless... fix it. 
       Parser.run_cmd input[0], input[1..-1].join(' ')
     end
     thread.join
