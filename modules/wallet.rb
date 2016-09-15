@@ -33,7 +33,8 @@ end
 
 class Wallet
   # too many static vars and methods. reiterate for better oop.
-  @daily_amount = 0
+  @@daily_amount = 0
+  @@spent_today = 0
   @balance = 0
   @@active_db
   @@active_db_name = ""
@@ -43,19 +44,21 @@ class Wallet
     @@active_db = DBManager.load @@active_db_name
     @@active_db = ItemDB.new if !@@active_db 
   end 
-  def set_daily arg_amount
-    @daily_amount = arg_amount
+  def self.set_daily arg_amount
+    @@daily_amount = arg_amount
+    @@spent_today = 0
+    @balance = 0
   end
   def self.spend *arg_item
     # TODO: double dereference problem unsolved! also, make tags into array ([0][2])
     @@active_db.push Item.new arg_item[0][0], arg_item[0][1], arg_item[0][2]
+    @@spent_today += arg_item[0][1].to_f
     save_db
+    return @@spent_today
   end
   def self.save_db
-    puts "debug - Wallet::save_db called: #{@@active_db_name}"
     DBManager.save @@active_db_name, @@active_db
   end
   def self.new_day
-    puts "debug - Wallet::new_day called."
   end
 end

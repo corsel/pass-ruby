@@ -7,8 +7,8 @@ require_relative 'modules/network'
 require_relative 'modules/parser'
 require_relative 'modules/wallet'
 
-wallet = Wallet.new "foo.db"
+wallet = Wallet.new "wallet.db"
 
-NetworkManager.start_server
+NetworkManager.run_server
 
 puts "fin."
