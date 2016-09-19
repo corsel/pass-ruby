@@ -1,2 +1,26 @@
 --- !ruby/object:ItemDB
-item_array: []
+item_array:
+- !ruby/object:Item
+  name: flakefest
+  price: '2'
+  tag_array:
+  - aselsan,aburcubur
+  time: 2016-09-19 15:25:29.232072226 +03:00
+- !ruby/object:Item
+  name: test
+  price: '0'
+  tag_array:
+  - 'null'
+  time: 2016-09-19 15:28:33.905696547 +03:00
+- !ruby/object:Item
+  name: test
+  price: '0'
+  tag_array:
+  - 'null'
+  time: 2016-09-19 15:28:49.431327868 +03:00
+- !ruby/object:Item
+  name: uzum-suyu
+  price: '2.5'
+  tag_array:
+  - aselsan
+  time: 2016-09-19 15:31:40.108803669 +03:00
