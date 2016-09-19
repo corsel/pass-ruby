@@ -7,7 +7,7 @@ require_relative 'modules/network'
 require_relative 'modules/parser'
 require_relative 'modules/wallet'
 
-wallet = Wallet.new "wallet.db"
+wallet = Wallet.new "wallet-record.db", "wallet-program.db"
 
 NetworkManager.run_server
 

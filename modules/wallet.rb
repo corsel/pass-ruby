@@ -31,34 +31,56 @@ class ItemDB
   end
 end
 
+class Program
+  attr_accessor :balance
+  attr_accessor :daily_amount
+  attr_accessor :spent_today
+  attr_accessor :last_update
+  def initialize
+    @balance = 0
+    @daily_amount = 0
+    @spent_today = 0
+    @last_update = Time.now
+  end
+end
+
 class Wallet
   # too many static vars and methods. reiterate for better oop.
-  @@daily_amount = 0
-  @@spent_today = 0
-  @balance = 0
+  @@active_program
+  @@active_program_name = "" 
   @@active_db
   @@active_db_name = ""
   
-  def initialize arg_db_name
+  def initialize arg_db_name, arg_program_name
     @@active_db_name = arg_db_name
     @@active_db = DBManager.load @@active_db_name
     @@active_db = ItemDB.new if !@@active_db 
+
+    @@active_program_name = arg_program_name
+    @@active_program = DBManager.load @@active_program_name
+    @@active_program = Program.new if !@@active_program
   end 
   def self.set_daily arg_amount
-    @@daily_amount = arg_amount
-    @@spent_today = 0
-    @balance = 0
-  end
-  def self.spend *arg_item
-    # TODO: double dereference problem unsolved! also, make tags into array ([0][2])
-    @@active_db.push Item.new arg_item[0][0], arg_item[0][1], arg_item[0][2]
-    @@spent_today += arg_item[0][1].to_f
+    @@active_program.daily_amount = arg_amount[0].to_f
+    @@active_program.spent_today = 0
+    @@active_program.balance = 0
     save_db
-    return @@spent_today
+  end
+  def self.spend arg_item
+    # TODO: double dereference problem unsolved! also, make tags into array ([0][2])
+    @@active_db.push Item.new arg_item[0], arg_item[1], arg_item[2]
+    @@active_program.spent_today += arg_item[1].to_f
+    @@active_program.balance -= arg_item[1].to_f
+    save_db
+    return @@active_program.spent_today
   end
   def self.save_db
     DBManager.save @@active_db_name, @@active_db
+    DBManager.save @@active_program_name, @@active_program
   end
-  def self.new_day
+  def self.new_day arg_void
+    @@active_program.balance += @@active_program.daily_amount
+    @@active_program.spent_today = 0
+    save_db
   end
 end

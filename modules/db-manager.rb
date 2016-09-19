@@ -22,4 +22,7 @@ class DBManager
     puts "debug - DBManager#save: #{arg_object.to_yaml}"
     file.close
   end
+  def self.remove arg_file_name
+    File.delete arg_file_name
+  end
 end

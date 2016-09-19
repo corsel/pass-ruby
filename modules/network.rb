@@ -10,11 +10,13 @@ class NetworkManager
     #thread = Thread.new do
     server.listen 10
       while true do
+        input = Array.new
         conn = server.accept
-        input = conn.readline.split
+        conn.readline.split.each do |word|
+          input.push word
+        end
         # TODO: join here, split again in parser. pointless... fix it. 
-        puts "debug - NetworkManager::run_server: #{Parser.run_cmd input[0], input[1..-1].join(' ')}"
-        conn.puts "hello\r\n"
+        puts "debug - NetworkManager::run_server: #{Parser.run_cmd input[0], input[1..-1]}"
         conn.close
       end
     #end
