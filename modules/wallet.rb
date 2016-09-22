@@ -81,6 +81,7 @@ class Wallet
   def self.new_day arg_void
     @@active_program.balance += @@active_program.daily_amount
     @@active_program.spent_today = 0
+    @@active_program.last_update = Time.now
     save_db
   end
 end
