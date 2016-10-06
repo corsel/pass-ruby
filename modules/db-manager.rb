@@ -25,4 +25,10 @@ class DBManager
   def self.remove arg_file_name
     File.delete arg_file_name
   end
+  def self.archive arg_file_name
+    if !File.exists? $DB_DIR_NAME + arg_file_name then
+      return
+    end
+    FileUtils.mv($DB_DIR_NAME + arg_file_name, $DB_DIR_NAME + arg_file_name + "." + Time.now.strftime("%y%m%d"))
+  end
 end

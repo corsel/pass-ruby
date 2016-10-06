@@ -5,3 +5,4 @@ in wallet 1.1:
   (4) status report shall be emitted from a new port.
   (5) records with null tags shall be automatically cleaned.
   (6) scheduler class shall be developed with minimum functionality.
+  (7) programs shall have specified "exclided" tags, which will not affect records thereof.
