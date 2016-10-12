@@ -1,25 +1,29 @@
 require_relative '../environment'
 
 class Parser
-  # TODO: check if incoming message is empty (at network module?)
-  def self.run_cmd arg_alias, *arg_arg_array
-    array = Array.new
-    File.open($MODULE_CFG_NAME).find do |line|
+  def self.parse_cmd arg_string
+    space_delim_array = arg_string.split ' '
+    match_line_string = File.open($MODULE_CFG_NAME).find do |line|
       if line[0] == '#' then
         next
       end
-      array.clear
-      line.split(' ').each do |word|
-        array.push word
-      end
-      array.shift == arg_alias
+      line.split(' ')[0] == space_delim_array[0]
     end
-    puts "debug - Parser::run_cmd: #{array.inspect}"
+    return if match_line_string == nil
+    match_line_array = match_line_string.split ' '
+    puts "debug - Parser::parse_cmd: match_line_array: #{match_line_array.inspect}"
+    class_name = match_line_array.shift(2)[1]
+    method_name = match_line_array.shift
+# TODO: handle nil arg_array (i.e. newday)
+    arg_array = arg_string.split(' ')[1..-1]
+    puts "debug - Parser::parse_cmd: class_name: #{class_name}, method name: #{method_name}, arg_array: #{arg_array.inspect}"
+    if arg_array != nil then
+      Object.const_get(class_name).method(method_name).call arg_array
+    else
+      Object.const_get(class_name).method(method_name).call 
+    end
     # const_get gets class from string
     # method gets method from string 
     # shift pops the first element and returns its value
-    # pass arguments as space delimited string
-    # TODO: return value should not be couoled with wallet module
-    return "You spent #{Object.const_get(array.shift).method(array.shift).call arg_arg_array[0]} today."
   end
 end

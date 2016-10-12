@@ -1,9 +1,0 @@
---- !ruby/object:ItemDB
-item_array:
-- !ruby/object:Item
-  name: test
-  price: '12'
-  tag_array:
-  - - tag1
-    - tag2
-  time: 2016-10-06 16:15:52.613718573 +03:00
