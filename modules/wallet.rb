@@ -69,13 +69,6 @@ class Wallet
     DBManager.save @@active_db_name, @@active_db
     DBManager.save @@active_program_name, @@active_program
   end
-  def self.clean_null 
-    @@active_db.clean_null
-  end
-  def self.routine 
-    clean_null
-    save_db
-  end
   def self.set_daily arg_amount
     DBManager.archive @@active_db_name   
     DBManager.archive @@active_program_name
@@ -84,7 +77,7 @@ class Wallet
     @@active_program.daily_amount = arg_amount[0].to_f
     @@active_program.spent_today = 0
     @@active_program.balance = 0
-    routine
+    save_db
   end
   def self.spend arg_item
     puts "debug - Wallet::spend: spend called."
@@ -93,13 +86,13 @@ class Wallet
     puts "debug - Wallet::spend: #{arg_item[2].split(',').inspect}"
     @@active_program.spent_today += arg_item[1].to_f
     @@active_program.balance -= arg_item[1].to_f
-    routine
+    save_db
     return @@active_program.spent_today
   end
   def self.new_day arg_void
     @@active_program.balance += @@active_program.daily_amount.to_f
     @@active_program.spent_today = 0
     @@active_program.last_update = Time.now
-    routine
+    save_db
   end
 end
