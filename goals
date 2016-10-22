@@ -1,8 +1,8 @@
 in wallet 1.1:
-  (1) new program creation shall save the previous databases as history, and create current databases from scratch.
+  + (1) new program creation shall save the previous databases as history, and create current databases from scratch.
   (2) programs shall be created with limits according to tags.
-  (3) irregular tcp messages shall be handled without crash.
-  (4) status report shall be emitted from a new port.
+  + (3) irregular tcp messages shall be handled without crash.
+  + (4) status report shall be emitted from a new port.
   (5) records with null tags shall be automatically cleaned.
   (6) scheduler class shall be developed with minimum functionality.
-  (7) programs shall have specified "exclided" tags, which will not affect records thereof.
+  (7) programs shall have specified "excluded" tags, which will not affect records thereof.

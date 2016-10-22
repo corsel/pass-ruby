@@ -1,0 +1,18 @@
+--- !ruby/object:ItemDB
+item_array:
+- !ruby/object:Item
+  name: test
+  price: '8.3'
+  tag_array:
+  - - bir
+    - ki
+    - uc
+  time: 2016-10-22 15:04:23.152161609 +00:00
+- !ruby/object:Item
+  name: test2
+  price: '6.2'
+  tag_array:
+  - - dort
+    - bes
+    - alti
+  time: 2016-10-22 15:05:27.645447640 +00:00
