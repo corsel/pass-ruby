@@ -1,5 +1,0 @@
---- !ruby/object:Program
-balance: 13.5
-daily_amount: 14.0
-spent_today: 14.5
-last_update: 2016-10-22 15:04:03.195364646 +00:00
