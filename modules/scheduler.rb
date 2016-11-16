@@ -6,7 +6,8 @@ class Scheduler
   @@daily_callback_array
   @@time_prev
 
-  def self.run_service
+  def self.run_server
+    puts "debug - Scheduler::run_server: called." 
     @@daily_callback_array = Array.new
     @@time_prev = Time.now
     loop do
@@ -15,5 +16,7 @@ class Scheduler
         @@time_prev = Time.now
       end
     end
+  end
+  def self.register_func
   end
 end
